@@ -17,13 +17,24 @@ data <- read.csv(file.choose(), header = TRUE)
 
 # Get 5000 rows sample from original data
 sampled_data <- data[sample(nrow(data), 5000),]
+
+#Generating a new column with data that indicates how much time has passed since the 
+#last renovation, i.e. cur_year - yr_renovated (if the house has never been renovated,
+#yr_built replaces yr_renovated in the formula).
+sampled_data$lst_renovation <- 2020 - sampled_data$yr_renovated
+sampled_data$lst_renovation <- ifelse(sampled_data$lst_renovation == 2020, 2020 - sampled_data$yr_built, sampled_data$lst_renovation)
+
+#Generating a new column with data to replace the basement area with a variable
+#that indicates a basement existence 
+sampled_data$has_basement <- ifelse(sampled_data$sqft_basement >= 1, 1, 0)
+
 # Remove unwanted columns
-sampled_data <- sampled_data[, c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 21)]
+sampled_data <- sampled_data[c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 20, 21, 22,23)]
 
 # Multiple linear regression
-fit <- lm(price ~ sqft_living + waterfront + view + condition + grade + sqft_living15, data=my_data)
+fit <- lm(price ~ sqft_living + waterfront + view + condition + grade + sqft_living15, data=sampled_data)
 
-fit <- lm(price ~ sqft_living, data=my_data)
+fit <- lm(price ~ sqft_living, data=sampled_data)
 
 fit <- lm(price ~ ., data=sampled_data)
 
@@ -63,8 +74,8 @@ generate_price_by_sqft_living_scatter_plot <- function(data){
                 size = 1) +
     theme_minimal() +
     labs(
-      x = "Tamanho do imóvel em pés",
-      y = "Preço",
+      x = "Tamanho do imï¿½vel em pï¿½s",
+      y = "Preï¿½o",
       color = "Nota"
     )
 }
@@ -78,8 +89,8 @@ generate_price_by_grade_scatter_plot <- function(data){
                 size = 1) +
     theme_minimal() +
     labs(
-      x = "Nota do imóvel",
-      y = "Preço",
+      x = "Nota do imï¿½vel",
+      y = "Preï¿½o",
       color = "Nota"
     )
 }
@@ -93,7 +104,7 @@ generate_beeswarm_plus_boxplot_for_price_and_grade <- function(data) {
     facet_grid(.~grade) +
     labs(
       x = "Notas",
-      y = "Preço",
+      y = "Preï¿½o",
       color = "Nota"
     )
 }
@@ -107,8 +118,8 @@ generate_price_by_bedroom_scatter_plot <- function(data){
                 size = 1) +
     theme_minimal() +
     labs(
-      x = "Número de quartos",
-      y = "Preço",
+      x = "Nï¿½mero de quartos",
+      y = "Preï¿½o",
       color = "Nota"
     )
 }
@@ -122,8 +133,8 @@ generate_price_by_bathroom_scatter_plot <- function(data){
                 size = 1) +
     theme_minimal() +
     labs(
-      x = "Número de banheiros",
-      y = "Preço",
+      x = "Nï¿½mero de banheiros",
+      y = "Preï¿½o",
       color = "Nota"
     )
 }
@@ -149,7 +160,7 @@ generate_lower_triangle_correlation_matrix_heatmap <- function (data) {
     geom_tile(color = "white") +
     scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
                          midpoint = 0, limit = c(-1,1), space = "Lab", 
-                         name="Correlação de\nPearson") +
+                         name="Correlaï¿½ï¿½o de\nPearson") +
     theme_minimal()+ 
     coord_fixed()+ 
     theme(
