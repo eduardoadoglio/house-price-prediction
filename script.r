@@ -16,8 +16,8 @@ sampled_data <- data[sample(nrow(data), 5000),]
 sampled_data$lst_renovation <- 2020 - sampled_data$yr_renovated
 sampled_data$lst_renovation <- ifelse(sampled_data$lst_renovation == 2020, 2020 - sampled_data$yr_built, sampled_data$lst_renovation)
 
-#Generating a new column with data to replace the basement area with a variable to
-#to indicate a basement existence 
+#Generating a new column with data to replace the basement area with a variable
+#that indicates a basement existence 
 sampled_data$has_basement <- ifelse(sampled_data$sqft_basement >= 1, 1, 0)
 
 # Remove unwanted columns
