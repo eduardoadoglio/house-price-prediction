@@ -20,10 +20,14 @@ data <- read.csv(file.choose(), header = TRUE)
 # Get 5000 rows sample from original data
 reduced_data <- data[sample(nrow(data), 5000),]
 write.csv(reduced_data, "C:\\Users\\cunha\\USP\\house-price-prediction\\data.csv", row.names = FALSE)
-
+#Generating a new column with data that indicates how much time has passed since the 
+#last renovation, i.e. cur_year - yr_renovated (if the house has never been renovated,
+#yr_built replaces yr_renovated in the formula).
 data$lst_renovation <- 2020 - data$yr_renovated
 data$lst_renovation <- ifelse(data$lst_renovation == 2020, 2020 - data$yr_built, data$lst_renovation)
 data$has_basement <- ifelse(data$sqft_basement >= 1, 1, 0)
+# Remove unwanted columns
+data <- data[c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 20, 21, 22,23)]
 
 # Defining sample size
 sample_size <- floor(0.70 * nrow(data))
@@ -35,9 +39,7 @@ set.seed(101)
 train_ind <- sample(seq_len(nrow(data)), size = sample_size)
 train <- data[train_ind, ]
 test <- data[-train_ind, ]
-#Generating a new column with data that indicates how much time has passed since the 
-#last renovation, i.e. cur_year - yr_renovated (if the house has never been renovated,
-#yr_built replaces yr_renovated in the formula).
+
 
 #test$lst_renovation <- 2020 - test$yr_renovated
 #test$lst_renovation <- ifelse(test$lst_renovation == 2020, 2020 - test$yr_built, test$lst_renovation)
@@ -47,9 +49,7 @@ test <- data[-train_ind, ]
 
 #test$has_basement <- ifelse(test$sqft_basement >= 1, 1, 0)
 
-# Remove unwanted columns
-data <- data[c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 20, 21, 22,23)]
-test <- test[c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 20, 21, 22,23)]
+#test <- test[c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 20, 21, 22,23)]
 
 fit <- mlr(train)
 
@@ -59,10 +59,8 @@ test
 summary(fit)
 
 cor(data, method=c("pearson"))
-
 # Function calls
 generate_lower_triangle_correlation_matrix_heatmap(data)
-
 # Scatter plots
 generate_price_by_sqft_living_scatter_plot(data)
 generate_price_by_grade_scatter_plot(data)
