@@ -10,25 +10,20 @@ source("utils.r")
 
 #install.packages("reshape2")
 
+
+# Get 5000 rows sample from original data
+reduced_data <- data[sample(nrow(data), 5000),]
+write.csv(reduced_data, "C:/Users/eduar/Downloads/Projetos/house-price-prediction/data.csv", row.names = FALSE)
+
+
 # Remove scientific notation
 options(scipen=999)
 
 # Sets working directory to current directory, if you're using RStudio
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-# Raw house data
+# House data
 data <- read.csv(file.choose(), header = TRUE)
-# Get 5000 rows sample from original data
-reduced_data <- data[sample(nrow(data), 5000),]
-write.csv(reduced_data, "C:/Users/eduar/Downloads/Projetos/house-price-prediction/data.csv", row.names = FALSE)
-# Defining sample size
-sample_size <- floor(0.70 * nrow(reduced_data))
-# Set Seed so that same sample can be reproduced in future also
-# Always set the seed before sampling
-set.seed(101)
-# Now Selecting 70% of data as sample from 5000 rows of the data
-train_ind <- sample(seq_len(nrow(data)), size = sample_size)
-train <- data[train_ind, ]
-test <- data[-train_ind, ]
+
 #Generating a new column with data that indicates how much time has passed since the 
 #last renovation, i.e. cur_year - yr_renovated (if the house has never been renovated,
 #yr_built replaces yr_renovated in the formula).
@@ -42,12 +37,28 @@ data$has_basement <- ifelse(data$sqft_basement >= 1, 1, 0)
 # Remove unwanted columns
 data <- data[c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 20, 21, 22,23)]
 
+# Defining sample size
+sample_size <- floor(0.70 * nrow(data))
+# Set Seed so that same sample can be reproduced in future also
+# Always set the seed before sampling
+set.seed(101)
+# Now Selecting 70% of data as sample from 5000 rows of the data
+train_ind <- sample(seq_len(nrow(data)), size = sample_size)
+train <- data[train_ind, ]
+test <- data[-train_ind, ]
+
+head(train$grade, 10)
+
 fit <- mlr(data)
+
+data$bedrooms[4690] <- 3
 
 # Summary of multiple linear regression results
 summary(fit)
 
 cor(data, method=c("pearson"))
+
+
 
 # Function calls
 generate_lower_triangle_correlation_matrix_heatmap(data)
