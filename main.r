@@ -19,7 +19,7 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 data <- read.csv(file.choose(), header = TRUE)
 # Get 5000 rows sample from original data
 reduced_data <- data[sample(nrow(data), 5000),]
-write.csv(reduced_data, "C:/Users/eduar/Downloads/Projetos/house-price-prediction/data.csv", row.names = FALSE)
+write.csv(reduced_data, "C:/Users/cunha/USP/house-price-prediction/data.csv", row.names = FALSE)
 # Defining sample size
 sample_size <- floor(0.70 * nrow(reduced_data))
 # Set Seed so that same sample can be reproduced in future also
