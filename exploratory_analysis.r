@@ -11,7 +11,7 @@ generate_price_by_sqft_living_scatter_plot <- function(data){
                 size = 1) +
     theme_minimal() +
     labs(
-      x = "Tamanho do imÃ³vel em pÃ©s",
+      x = "Tamanho do imóvel em pés",
       y = "PreÃ§o",
       color = "Nota"
     )
@@ -26,8 +26,8 @@ generate_price_by_grade_scatter_plot <- function(data){
                 size = 1) +
     theme_minimal() +
     labs(
-      x = "Nota do imÃ³vel",
-      y = "PreÃ§o",
+      x = "Nota do imóvel",
+      y = "Preço",
       color = "Nota"
     )
 }
@@ -41,7 +41,7 @@ generate_beeswarm_plus_boxplot_for_price_and_grade <- function(data) {
     facet_grid(.~grade) +
     labs(
       x = "Notas",
-      y = "PreÃ§o",
+      y = "Preço",
       color = "Nota"
     )
 }
@@ -55,8 +55,8 @@ generate_price_by_bedroom_scatter_plot <- function(data){
                 size = 1) +
     theme_minimal() +
     labs(
-      x = "NÃºmero de quartos",
-      y = "PreÃ§o",
+      x = "Número de quartos",
+      y = "Preço",
       color = "Nota"
     )
 }
@@ -70,8 +70,8 @@ generate_price_by_bathroom_scatter_plot <- function(data){
                 size = 1) +
     theme_minimal() +
     labs(
-      x = "NÃºmero de banheiros",
-      y = "PreÃ§o",
+      x = "Número de banheiros",
+      y = "Preço",
       color = "Nota"
     )
 }
@@ -97,7 +97,7 @@ generate_lower_triangle_correlation_matrix_heatmap <- function (data) {
     geom_tile(color = "white") +
     scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
                          midpoint = 0, limit = c(-1,1), space = "Lab", 
-                         name="CorrelaÃ§Ã£o de\nPearson") +
+                         name="Correlação de\nPearson") +
     theme_minimal()+ 
     coord_fixed()+ 
     theme(
