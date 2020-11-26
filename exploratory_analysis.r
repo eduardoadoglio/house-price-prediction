@@ -76,6 +76,21 @@ generate_price_by_bathroom_scatter_plot <- function(data){
     )
 }
 
+generate_price_by_waterfront_scatter_plot <- function(data){
+  ggplot(data, aes(x = waterfront, y = price)) +
+    geom_point(aes(color= factor(grade))) +
+    stat_smooth(method = "lm",
+                col = "#C42126",
+                se = TRUE,
+                size = 1) +
+    theme_minimal() +
+    labs(
+      x = "Tamanho do imóvel em pés",
+      y = "Preço",
+      color = "Nota"
+    )
+}
+
 # Correlation
 
 # Get basic correlation matrix

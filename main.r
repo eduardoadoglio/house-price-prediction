@@ -47,6 +47,8 @@ fit <- mlr(data)
 # Summary of multiple linear regression results
 summary(fit)
 
+cor(data, method=c("pearson"))
+
 # Function calls
 generate_lower_triangle_correlation_matrix_heatmap(data)
 
@@ -56,7 +58,7 @@ generate_price_by_grade_scatter_plot(data)
 generate_beeswarm_plus_boxplot_for_price_and_grade(data)
 generate_price_by_bedroom_scatter_plot(data)
 generate_price_by_bathroom_scatter_plot(data)
-
+generate_price_by_waterfront_scatter_plot(data)
 #Correlation
 generate_correlation_matrix_heatmap(data)
 generate_lower_triangle_correlation_matrix_heatmap(data)
