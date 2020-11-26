@@ -34,7 +34,6 @@ sampled_data$has_basement <- ifelse(sampled_data$sqft_basement >= 1, 1, 0)
 # Remove unwanted columns
 sampled_data <- sampled_data[c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 20, 21, 22,23)]
 
-
 fit <- mlr(sampled_data)
 
 # Summary of multiple linear regression results
