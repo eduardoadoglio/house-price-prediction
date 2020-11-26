@@ -14,13 +14,20 @@ options(scipen=999)
 
 # Sets working directory to current directory, if you're using RStudio
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-
 # Raw house data
 data <- read.csv(file.choose(), header = TRUE)
-
 # Get 5000 rows sample from original data
-sampled_data <- data[sample(nrow(data), 5000),]
-
+reduced_data <- data[sample(nrow(data), 5000),]
+write.csv(reduced_data, "C:/Users/eduar/Downloads/Projetos/house-price-prediction/sampled_data.csv", row.names = FALSE)
+# Defining sample size
+sample_size <- floor(0.70 * nrow(reduced_data))
+# Set Seed so that same sample can be reproduced in future also
+# Always set the seed before sampling
+set.seed(101)
+# Now Selecting 70% of data as sample from 5000 rows of the data
+train_ind <- sample(seq_len(nrow(data)), size = sample_size)
+train <- data[train_ind, ]
+test <- data[-train_ind, ]
 #Generating a new column with data that indicates how much time has passed since the 
 #last renovation, i.e. cur_year - yr_renovated (if the house has never been renovated,
 #yr_built replaces yr_renovated in the formula).
