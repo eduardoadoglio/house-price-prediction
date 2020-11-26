@@ -15,7 +15,7 @@ options(scipen=999)
 
 # Sets working directory to current directory, if you're using RStudio
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-# Raw house data
+# House data
 data <- read.csv(file.choose(), header = TRUE)
 # Get 5000 rows sample from original data
 reduced_data <- data[sample(nrow(data), 5000),]
@@ -42,12 +42,28 @@ data$has_basement <- ifelse(data$sqft_basement >= 1, 1, 0)
 # Remove unwanted columns
 data <- data[c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 20, 21, 22,23)]
 
+# Defining sample size
+sample_size <- floor(0.70 * nrow(data))
+# Set Seed so that same sample can be reproduced in future also
+# Always set the seed before sampling
+set.seed(101)
+# Now Selecting 70% of data as sample from 5000 rows of the data
+train_ind <- sample(seq_len(nrow(data)), size = sample_size)
+train <- data[train_ind, ]
+test <- data[-train_ind, ]
+
+head(train$grade, 10)
+
 fit <- mlr(data)
+
+data$bedrooms[4690] <- 3
 
 # Summary of multiple linear regression results
 summary(fit)
 
 cor(data, method=c("pearson"))
+
+
 
 # Function calls
 generate_lower_triangle_correlation_matrix_heatmap(data)
