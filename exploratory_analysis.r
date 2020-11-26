@@ -12,7 +12,7 @@ generate_price_by_sqft_living_scatter_plot <- function(data){
     theme_minimal() +
     labs(
       x = "Tamanho do imóvel em pés",
-      y = "PreÃ§o",
+      y = "Preço",
       color = "Nota"
     )
 }
