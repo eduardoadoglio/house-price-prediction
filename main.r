@@ -34,6 +34,13 @@ data$lst_renovation <- ifelse(data$lst_renovation == 2020, 2020 - data$yr_built,
 #that indicates a basement existence 
 data$has_basement <- ifelse(data$sqft_basement >= 1, 1, 0)
 
+# Generating tables ordered by price
+data_ordered_by_price_cresc <- data[order(data$price),]
+data_ordered_by_price_decr <- data[order(-data$price),]
+
+View(head(data_ordered_by_price_cresc, 10))
+View(head(data_ordered_by_price_decr, 10))
+
 #Remove unwanted columns
 data <- data[c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 20, 21, 22, 23)]
 #Creating a dataset copy to plot correlation matrix without yr_build.
